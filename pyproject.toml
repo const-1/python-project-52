@@ -1,0 +1,16 @@
+[project]
+name = "hexlet-code"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "dj-database-url>=3.1.2",
+    "django>=6.0.3",
+    "gunicorn>=25.1.0",
+    "python-dotenv>=1.2.2",
+]
+
+[tool.setuptools]
+packages = ["task_manager"]
+
