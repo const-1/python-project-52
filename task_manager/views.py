@@ -1,5 +1,5 @@
-from django.http import HttpResponse
+from django.shortcuts import render
 
 def index(request):
-    return HttpResponse("Добро пожаловать в Менеджер задач!")
-
+    # raise Exception("Test error for Rollbar")  # Временная строка для проверки Rollbar
+    return render(request, 'task_manager/index.html')

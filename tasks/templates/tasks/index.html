@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load django_bootstrap5 %}
+
+{% block title %}Задачи{% endblock %}
+
+{% block content %}
+<h1>Задачи</h1>
+
+<!-- Форма фильтрации с равномерным распределением -->
+<div class="card mb-3">
+    <div class="card-body">
+        <form method="get" class="d-flex flex-wrap align-items-end gap-2">
+            <div class="flex-fill" style="min-width: 120px;">
+                {{ filter.form.status.label_tag }}
+                {{ filter.form.status }}
+            </div>
+            <div class="flex-fill" style="min-width: 120px;">
+                {{ filter.form.executor.label_tag }}
+                {{ filter.form.executor }}
+            </div>
+            <div class="flex-fill" style="min-width: 120px;">
+                {{ filter.form.labels.label_tag }}
+                {{ filter.form.labels }}
+            </div>
+            <div class="flex-fill" style="min-width: 140px;">
+                <div class="form-check">
+                    {{ filter.form.self_tasks }}
+                    <label class="form-check-label"
+                           for="{{ filter.form.self_tasks.id_for_label }}">
+                        Только свои задачи
+                    </label>
+                </div>
+            </div>
+            <div class="flex-fill" style="min-width: 100px; max-width: 150px;">
+                <button type="submit" class="btn btn-primary w-100">
+                    Применить
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<a href="{% url 'tasks:create' %}"
+   class="btn btn-primary mb-3">
+    Создать задачу
+</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Имя</th>
+            <th>Статус</th>
+            <th>Автор</th>
+            <th>Исполнитель</th>
+            <th>Дата создания</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for task in tasks %}
+        <tr>
+            <td>{{ task.id }}</td>
+            <td>{{ task.name }}</td>
+            <td>{{ task.status.name }}</td>
+            <td>{{ task.author.username }}</td>
+            <td>{{ task.executor.username|default:"—" }}</td>
+            <td>{{ task.created_at|date:"d.m.Y H:i" }}</td>
+            <td>
+                <a href="{% url 'tasks:detail' task.pk %}"
+                   class="btn btn-sm btn-outline-info">
+                    Показать
+                </a>
+                <a href="{% url 'tasks:update' task.pk %}"
+                   class="btn btn-sm btn-outline-primary">
+                    Изменить
+                </a>
+                <a href="{% url 'tasks:delete' task.pk %}"
+                   class="btn btn-sm btn-outline-danger">
+                    Удалить
+                </a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="7">Задач пока нет.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

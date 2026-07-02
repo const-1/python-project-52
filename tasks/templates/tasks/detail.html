@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Просмотр задачи{% endblock %}
+{% block content %}
+<h1>{{ task.name }}</h1>
+<p><strong>Описание:</strong> {{ task.description|linebreaks }}</p>
+<p><strong>Статус:</strong> {{ task.status.name }}</p>
+<p><strong>Автор:</strong> {{ task.author.username }}</p>
+<p><strong>Исполнитель:</strong> {{ task.executor.username|default:"Не назначен" }}</p>
+<p><strong>Метки:</strong> 
+    {% for label in task.labels.all %}
+        {{ label.name }}{% if not forloop.last %}, {% endif %}
+    {% empty %}
+        нет
+    {% endfor %}
+</p>
+<p><strong>Дата создания:</strong> {{ task.created_at|date:"d.m.Y H:i" }}</p>
+<a href="{% url 'tasks:list' %}" class="btn btn-secondary">Назад</a>
+{% endblock %}
