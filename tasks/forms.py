@@ -7,15 +7,15 @@ class TaskForm(forms.ModelForm):
         queryset=Label.objects.all(),
         widget=forms.SelectMultiple,
         required=False,
-        label='Метки'
+        label="Метки",
     )
 
     class Meta:
         model = Task
-        fields = ['name', 'description', 'status', 'executor', 'labels']
+        fields = ["name", "description", "status", "executor", "labels"]
         labels = {
-            'name': 'Имя',
-            'description': 'Описание',
-            'status': 'Статус',
-            'executor': 'Исполнитель',
+            "name": "Имя",
+            "description": "Описание",
+            "status": "Статус",
+            "executor": "Исполнитель",
         }

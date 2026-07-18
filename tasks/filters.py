@@ -11,30 +11,25 @@ class TaskFilter(django_filters.FilterSet):
     """
     Фильтр для задач: по статусу, исполнителю, метке и чекбоксу "Только свои".
     """
+
     status = django_filters.ModelChoiceFilter(
-        queryset=Status.objects.all(),
-        empty_label='---------',
-        label='Статус'
+        queryset=Status.objects.all(), empty_label="---------", label="Статус"
     )
     executor = django_filters.ModelChoiceFilter(
-        queryset=User.objects.all(),
-        empty_label='---------',
-        label='Исполнитель'
+        queryset=User.objects.all(), empty_label="---------", label="Исполнитель"
     )
     labels = django_filters.ModelChoiceFilter(
-        queryset=Label.objects.all(),
-        empty_label='---------',
-        label='Метка'
+        queryset=Label.objects.all(), empty_label="---------", label="Метка"
     )
     self_tasks = django_filters.BooleanFilter(
-        method='filter_self_tasks',
+        method="filter_self_tasks",
         widget=forms.CheckboxInput,
-        label='Только свои задачи'
+        label="Только свои задачи",
     )
 
     class Meta:
         model = Task
-        fields = ['status', 'executor', 'labels']
+        fields = ["status", "executor", "labels"]
 
     def filter_self_tasks(self, queryset, name, value):
         """
