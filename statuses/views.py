@@ -3,7 +3,6 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.contrib import messages
-from django.utils.translation import gettext_lazy as _
 
 from .models import Status
 from .forms import StatusForm
@@ -22,12 +21,12 @@ class StatusCreateView(LoginRequiredMixin, CreateView):
     template_name = "statuses/form.html"
     success_url = reverse_lazy("statuses:list")
     extra_context = {
-        "title": _("Create status"),
-        "button_text": _("Create"),
+        "title": "Создать статус",
+        "button_text": "Создать",
     }
 
     def form_valid(self, form):
-        messages.success(self.request, _("Status successfully created"))
+        messages.success(self.request, "Статус успешно создан")
         return super().form_valid(form)
 
 
@@ -37,12 +36,12 @@ class StatusUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "statuses/form.html"
     success_url = reverse_lazy("statuses:list")
     extra_context = {
-        "title": _("Edit status"),
-        "button_text": _("Update"),
+        "title": "Редактирование статуса",
+        "button_text": "Изменить",
     }
 
     def form_valid(self, form):
-        messages.success(self.request, _("Status successfully updated"))
+        messages.success(self.request, "Статус успешно изменен")
         return super().form_valid(form)
 
 
@@ -51,16 +50,17 @@ class StatusDeleteView(LoginRequiredMixin, DeleteView):
     template_name = "statuses/confirm_delete.html"
     success_url = reverse_lazy("statuses:list")
     extra_context = {
-        "title": _("Delete status"),
-        "button_text": _("Yes, delete"),
+        "title": "Удаление статуса",
+        "button_text": "Да, удалить",
     }
 
     def post(self, request, *args, **kwargs):
         status = self.get_object()
         if Task.objects.filter(status=status).exists():
             messages.error(
-                request, _("Cannot delete status because it is used in tasks")
+                request,
+                "Невозможно удалить статус, так как он используется в задачах"
             )
             return redirect("statuses:list")
-        messages.success(request, _("Status successfully deleted"))
+        messages.success(request, "Статус успешно удален")
         return super().post(request, *args, **kwargs)

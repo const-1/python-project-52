@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.models import User
 from .models import Task, Label
 
 
@@ -8,6 +9,11 @@ class TaskForm(forms.ModelForm):
         widget=forms.SelectMultiple,
         required=False,
         label="Метки",
+    )
+    executor = forms.ModelChoiceField(
+        queryset=User.objects.all(),
+        required=False,
+        label="Исполнитель",
     )
 
     class Meta:

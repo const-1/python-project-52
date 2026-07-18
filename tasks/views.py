@@ -13,12 +13,9 @@ class TaskListView(LoginRequiredMixin, FilterView):
     model = Task
     template_name = "tasks/index.html"
     context_object_name = "tasks"
-    filterset_class = TaskFilter  # класс фильтра
+    filterset_class = TaskFilter
 
     def get_queryset(self):
-        """
-        Базовый queryset для фильтрации.
-        """
         return Task.objects.all()
 
 
@@ -53,13 +50,16 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy("tasks:list")
     extra_context = {"title": "Удалить задачу", "button_text": "Да, удалить"}
 
-    def post(self, request, *args, **kwargs):
+    def dispatch(self, request, *args, **kwargs):
         task = self.get_object()
         if task.author != request.user:
             messages.error(request, "Задачу может удалить только её автор")
             return redirect("tasks:list")
+        return super().dispatch(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
         messages.success(request, "Задача успешно удалена")
-        return super().post(request, *args, **kwargs)
+        return super().delete(request, *args, **kwargs)
 
 
 class TaskDetailView(LoginRequiredMixin, DetailView):
