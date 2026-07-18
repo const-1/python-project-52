@@ -6,7 +6,7 @@
 {% block content %}
 <h1>{{ title }}</h1>
 <p>
-    {% trans "Are you sure you want to delete status" %}
+    Вы уверены, что хотите удалить статус
     "{{ object.name }}"?
 </p>
 <form method="post">
@@ -16,7 +16,7 @@
     </button>
     <a href="{% url 'statuses:list' %}"
        class="btn btn-secondary">
-        {% trans "Cancel" %}
+        Отмена
     </a>
 </form>
 {% endblock %}

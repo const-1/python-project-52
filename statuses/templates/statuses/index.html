@@ -1,22 +1,21 @@
 {% extends 'base.html' %}
-{% load i18n %}
 {% load django_bootstrap5 %}
 
-{% block title %}{% trans "Statuses" %}{% endblock %}
+{% block title %}Статусы{% endblock %}
 
 {% block content %}
-<h1>{% trans "Statuses" %}</h1>
+<h1>Статусы</h1>
 <a href="{% url 'statuses:create' %}"
    class="btn btn-primary mb-3">
-    {% trans "Create status" %}
+    Создать статус
 </a>
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>{% trans "ID" %}</th>
-            <th>{% trans "Name" %}</th>
-            <th>{% trans "Created at" %}</th>
-            <th>{% trans "Actions" %}</th>
+            <th>ID</th>
+            <th>Имя</th>
+            <th>Дата создания</th>
+            <th>Действия</th>
         </tr>
     </thead>
     <tbody>
@@ -28,17 +27,17 @@
             <td>
                 <a href="{% url 'statuses:update' status.pk %}"
                    class="btn btn-sm btn-outline-primary">
-                    {% trans "Edit" %}
+                    Изменить
                 </a>
                 <a href="{% url 'statuses:delete' status.pk %}"
                    class="btn btn-sm btn-outline-danger">
-                    {% trans "Delete" %}
+                    Удалить
                 </a>
             </td>
         </tr>
         {% empty %}
         <tr>
-            <td colspan="4">{% trans "No statuses yet." %}</td>
+            <td colspan="4">Статусов пока нет.</td>
         </tr>
         {% endfor %}
     </tbody>
