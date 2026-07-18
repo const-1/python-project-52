@@ -3,6 +3,11 @@ from django.contrib.auth.models import User
 from .models import Task, Label
 
 
+class UserChoiceField(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        return obj.get_full_name() or obj.username
+
+
 class TaskForm(forms.ModelForm):
     labels = forms.ModelMultipleChoiceField(
         queryset=Label.objects.all(),
@@ -10,7 +15,7 @@ class TaskForm(forms.ModelForm):
         required=False,
         label="Метки",
     )
-    executor = forms.ModelChoiceField(
+    executor = UserChoiceField(
         queryset=User.objects.all(),
         required=False,
         label="Исполнитель",

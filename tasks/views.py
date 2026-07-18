@@ -53,7 +53,7 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
     def dispatch(self, request, *args, **kwargs):
         task = self.get_object()
         if task.author != request.user:
-            messages.error(request, "Задачу может удалить только её автор")
+            messages.error(request, "Задачу может удалить только ее автор")
             return redirect("tasks:list")
         return super().dispatch(request, *args, **kwargs)
 

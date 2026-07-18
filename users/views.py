@@ -105,5 +105,5 @@ class UserDeleteView(UserPassesTestMixin, DeleteView):
                 "Невозможно удалить пользователя, так как он является автором задач"
             )
             return redirect("users_list")
-        messages.success(request, "Пользователь успешно удалён")
+        messages.success(request, "Пользователь успешно удален")
         return super().post(request, *args, **kwargs)
